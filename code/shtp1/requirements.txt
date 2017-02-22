@@ -1,0 +1,6 @@
+flask
+werkzeug
+xlwt
+requests
+xlrd
+nose>1.1
