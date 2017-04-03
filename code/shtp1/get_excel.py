@@ -17,9 +17,9 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
-@app.route('/')
-def hello_world():
-    return 'hello world'
+@app.route('/', methods=['POST'])
+def connect():
+    return 'success'
 
 
 @app.route('/upload', methods=['POST'])

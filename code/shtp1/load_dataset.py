@@ -21,8 +21,10 @@ def read_excel(filename):
     # columns
     ncols = table.ncols
     # print "load original dataset..."
+    items = []
     for i in range(nrows):
-        items = []
         for j in range(ncols):
-            items.append(int(table.cell_value(i, j)))
-        return items
+            items.append(table.cell_value(i, j))
+            print items
+    #print len(items)
+    return items

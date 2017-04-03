@@ -5,12 +5,13 @@
 from paillier.paillier import *
 from send_to_cloud import *
 
+import pickle
 import xlrd
 import xlwt
 
 
 # load the raw data records
-def open_excel(file='test_data/test_query.xls'):
+def open_excel(file='experiment/raw/M30-Query.xls'):
     try:
         data = xlrd.open_workbook(file)
         return data
@@ -18,14 +19,13 @@ def open_excel(file='test_data/test_query.xls'):
         print str(e)
 
 
-def write_excel(file='test_data/test_query.xls'):
+def write_excel(file='experiment/raw/M30-Query.xls'):
     data = open_excel(file)
     table = data.sheet_by_index(0)
     nrows = table.nrows  # rows
     ncols = table.ncols  # columns
-    # print (colnames)
-    # print "Generating keypair..."
-    priv, pub = generate_keypair(128)
+
+    pub = pickle.load(open("keypair/pub_128.p", "rb"))
     print "public key =", pub
     print "load original dataset..."
     for i in range(nrows):
@@ -37,7 +37,8 @@ def write_excel(file='test_data/test_query.xls'):
     print "encrypted dataset..."
     # print (encrypt(pub, int(table.cell_value(0, 0))))
     xls = xlwt.Workbook()
-    sheet1 = xls.add_sheet(u'test_query_encrypted', cell_overwrite_ok=True)
+    sheet1 = xls.add_sheet(u'M30-Query-S128_encrypted', cell_overwrite_ok=True)
+    start = timeit.default_timer()
     for i in range(nrows):
         citems = []
         for j in range(ncols):
@@ -45,16 +46,18 @@ def write_excel(file='test_data/test_query.xls'):
             citems.append(str(x))
             sheet1.write(i, j, str(x))
         print (citems)
-    xls.save('test_data/test_query_encrypted.xls')
+    xls.save('experiment/encrypted/M30-Query-S128_encrypted.xls')
+    elapsed = (timeit.default_timer() - start)
+    print "encrypting time is", elapsed, "seconds"
 
 
 def main():
     write_excel()
     # url = 'http://112.74.181.10:5000/upload'
-    url = 'http://127.0.0.1:5000/upload'
-    filename = 'test_data/test_query_encrypted.xls'
-    sender = 'query_provider'
-    send_excel(url, filename, sender)
+    #url = 'http://127.0.0.1:5000/upload'
+    #filename = 'test_data/test_query_encrypted.xls'
+    #sender = 'query_provider'
+    #send_excel(url, filename, sender)
 
 
 if __name__ == "__main__":
