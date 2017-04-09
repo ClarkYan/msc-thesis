@@ -81,6 +81,6 @@ print "public key =", pub
 input = raw_input("Select your proposed k: ")
 k = int(input)
 start = timeit.default_timer()
-load_data('experiment/128/M10-N1000-S128-SSED.xls', k)
+load_data('experiment/128/M30-N4000-S128-SSED.xls', k)
 elapsed = (timeit.default_timer() - start)
 print "processing time is", elapsed, "seconds"

@@ -56,7 +56,7 @@ def secure_squared_euclidean_distance(file1, file2):  # secure squared Euclidean
     # print "load original dataset..."
     temp = 1
     xls = xlwt.Workbook()
-    sheet1 = xls.add_sheet(u'M10-N2000-S128-SSED', cell_overwrite_ok=True)
+    sheet1 = xls.add_sheet(u'M30-N2000-S128-SSED', cell_overwrite_ok=True)
     if ncols1 == ncols2:
         for i in range(nrows1):
             for j in range(ncols1):
@@ -77,7 +77,7 @@ def secure_squared_euclidean_distance(file1, file2):  # secure squared Euclidean
             print "SSED[Ek(x-y), Ek(x-y)]=", ssed, "SED=", sed
             sheet1.write(i, 0, str(ssed))
             temp = 1
-        xls.save('experiment/ssed/128/M10-N2000-S128-SSED.xls')
+        xls.save('experiment/ssed/128/M30-N2000-S128-SSED.xls')
     else:
         print "It is not suitable for the protocol!!!"
 
@@ -86,7 +86,7 @@ pub = pickle.load(open("keypair/pub_128.p", "rb"))
 priv = pickle.load(open("keypair/priv_128.p", "rb"))
 print "public key =", pub
 start = timeit.default_timer()
-secure_squared_euclidean_distance('experiment/data_owner_1/128/M10-N2000-S128_encrypted.xls',
-                                  'experiment/query_provider/128/M10-Query-S128_encrypted.xls')
+secure_squared_euclidean_distance('experiment/data_owner_1/128/M30-N2000-S128_encrypted.xls',
+                                  'experiment/query_provider/128/M30-Query-S128_encrypted.xls')
 elapsed = (timeit.default_timer() - start)
 print "processing time is", elapsed, "seconds"
